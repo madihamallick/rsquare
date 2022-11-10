@@ -10,12 +10,12 @@ import {
   USER_LOGOUT
 } from '../constants/authConstant.js'
 
-export const registerUser = (fname, lname, email, phone, password) => async (dispatch) => {
+export const registerUser = (fname, lname, email, phoneNumber, password) => async (dispatch) => {
   try {
     dispatch({
       type: USER_ADD_REQUEST
     })
-    const { data } = await registerUserApi(fname, lname, email, phone, password)
+    const { data } = await registerUserApi(fname, lname, email, phoneNumber, password)
     dispatch({
       type: USER_ADD_SUCCESS,
       payload: data
