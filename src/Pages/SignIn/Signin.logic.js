@@ -13,7 +13,7 @@ export const SigninLogic = () => {
     const handleSignin = (email, password) => {
         dispatch(userLogin(email, password))
         navigate("/");
-        window.location.reload();
+        // window.location.reload();
         setEmail('');
         setPassword('');
     };

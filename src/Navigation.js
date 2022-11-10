@@ -16,7 +16,7 @@ export default function Navigator() {
                     }
                 />
                 <Route
-                    path="/"
+                    path="/dashboard"
                     element={token ? <Dashboard /> : <Navigate to="/" replace />}
                 />
                 <Route path="/login" element={<SignIn/>} />
