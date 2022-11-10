@@ -141,9 +141,9 @@ export function Previews(props) {
         {console.log(files)}
       </aside>
     </section>
-      <div class="w-full bg-grey400 shadow-sm rounded-full h-2.5 mb-4 dark:bg-grey700">
+      {/* <div class="w-full bg-grey400 shadow-sm rounded-full h-2.5 mb-4 dark:bg-grey700">
         <div class="bg-Bluish h-2.5 rounded-full dark:bg-Bluish" style={{ width: "45%" }}></div>
-      </div>
+      </div> */}
       {/* Add more and upload button to the right */}
       <div className='flex flex-row justify-end '>
         <div {...getRootProps({ className: 'dropzone' })}>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import dashBg from '../../assets/dashboardBg.png'
-import { AiOutlinePlusCircle } from 'react-icons/ai'
+import { AiFillDelete, AiOutlinePlusCircle } from 'react-icons/ai'
 import { Previews } from '../../Components/PreviewDdown/PreviewDdown'
 import axios from 'axios'
 
@@ -39,7 +39,17 @@ const Dashboard = () => {
               Upload new Image
             </span>
           </button>
+          {showdelete&&
+          <button className='bg-Bluish hover:bg-Bluish text-white py-2 px-4 rounded-lg' 
+      >
+            <span className='flex flex-row'>
+              <AiFillDelete className='w-6 h-7 mr-2' />
+              Delete Selected
+            </span>
+          </button>
+          }
         </div>
+  
       </nav>
       <p className='text-gray-500 text-sm px-10 mt-2'>{image.length} Images</p>
       {/* Page Content */}
