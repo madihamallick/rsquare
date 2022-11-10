@@ -3,10 +3,12 @@ import dashBg from '../../assets/dashboardBg.png'
 import { AiFillDelete, AiOutlinePlusCircle } from 'react-icons/ai'
 import { Previews } from '../../Components/PreviewDdown/PreviewDdown'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 const Dashboard = () => {
   const [show, setShow] = useState(false)
   const [showdelete, setShowDelete] = useState(false)
+  const [deletefile, setDeleteFile] = useState([])
 
   // getting id from cookies
   const user = document.cookie.split('=')[1]
@@ -41,11 +43,31 @@ const Dashboard = () => {
           </button>
           {showdelete&&
           <button className='bg-white border-2 text-Bluish border-Bluish hover:bg-Bluish hover:text-white py-2 px-4 rounded-lg' 
-      >
+              onClick={() => {
+                for (let i = 0; i < deletefile.length; i++) {
+                  axios.delete(`https://rsquare-auth.herokuapp.com/images/${userObj.id}/${deletefile[i]}`)
+                    .then(res => {
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted',
+                        text: 'Your file has been deleted.',
+                        showConfirmButton: true,
+                        
+                      })
+                      // setShowDelete(false)
+                      window.location.reload()
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    })
+                }
+              }}
+            >
             <span className='flex flex-row'>
               <AiFillDelete className='w-6 h-7 mr-2 ' />
               Delete Selected
             </span>
+
           </button>
           }
         </div>
@@ -97,6 +119,7 @@ const Dashboard = () => {
                   onChange={(e) => {
                     console.log(e.target.checked);
                     console.log(img._id);
+                    setDeleteFile([...deletefile, img._id])
                     setShowDelete(e.target.checked)
                   }}
 
