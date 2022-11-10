@@ -150,7 +150,9 @@ const Dashboard = () => {
                   </div>
                   {/*body*/}
                   <div className="relative p-6 flex-auto">
-                  <Previews/>
+                  <Previews  
+                  showModal={setShow}
+                  />
                   </div>
                 </div>
               </div>

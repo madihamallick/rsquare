@@ -70,6 +70,9 @@ function imageUploaded(files) {
 
         };
         base64String = "";
+        console.log("done");
+        // refresh page
+        window.location.reload();
         reader.onerror = (error) => {
           console.log('Error: ', error);
         }
@@ -156,7 +159,7 @@ export function Previews(props) {
         </div>
         <button className=' bg-Bluish text-white py-2 px-6 rounded-md border-2 border-Bluish ml-5'
           onClick={() => {
-            imageUploaded(acceptImage);
+            imageUploaded(acceptImage)
           }}
         >
           <span className='flex flex-row'>
