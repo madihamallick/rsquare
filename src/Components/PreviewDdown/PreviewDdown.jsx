@@ -60,7 +60,7 @@ function imageUploaded(files) {
             fileName: fileName,
             fileType: fileType
           }
-          axios.post(`http://localhost:5000/images/${userObj.id}`, data)
+          axios.post(`https://rsquare-auth.herokuapp.com/images/${userObj.id}`, data)
             .then(res => {
               console.log(res);
             })

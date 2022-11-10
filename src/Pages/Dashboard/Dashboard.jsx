@@ -15,7 +15,7 @@ const Dashboard = () => {
   const [image, setImage] = useState([])
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/images/${userObj.id}`).then(res => {
+    axios.get(`https://rsquare-auth.herokuapp.com/images/${userObj.id}`).then(res => {
       setImage(res.data.images)
     })
       .catch(err => {

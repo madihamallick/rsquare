@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = "http://localhost:5000/users/auth"
+const url = "https://rsquare-auth.herokuapp.com/users/auth"
 
 const config = {
   headers: {
