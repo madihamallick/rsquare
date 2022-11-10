@@ -11,7 +11,9 @@ export const SignupLogic = () => {
     const [phone, setPhone] = useState('')
 
     const handleSignup = (fname, lname, email, phone, password) => {
-        dispatch(registerUser(fname, lname, email, phone, password))
+        // randomly generate a 6 digit number and convert it to string
+        const id = Math.floor(100000 + Math.random() * 900000).toString();
+        dispatch(registerUser(fname, lname, email, phone, password, id))
         setEmail('');
         setPassword('');
         setFname('');

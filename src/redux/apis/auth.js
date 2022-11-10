@@ -7,8 +7,8 @@ const config = {
   }
 }
 
-export const registerUserApi = async (fname, lname, email, phoneNumber, password) =>
-  await axios.post(`${url}/idpswd`, { fname, lname, email, phoneNumber, password }, config)
+export const registerUserApi = async (fname, lname, email, phoneNumber, password, id) =>
+  await axios.post(`${url}/idpswd`, { fname, lname, email, phoneNumber, password, id }, config)
 
 export const loginUserApi = async (email, password) =>
   await axios.post(`${url}/login`, { email, password }, config)

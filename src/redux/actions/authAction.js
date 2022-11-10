@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { loginUserApi, registerUserApi } from '../apis/auth.js'
 import {
@@ -10,12 +11,12 @@ import {
   USER_LOGOUT
 } from '../constants/authConstant.js'
 
-export const registerUser = (fname, lname, email, phoneNumber, password) => async (dispatch) => {
+export const registerUser = (fname, lname, email, phoneNumber, password, id) => async (dispatch) => {
   try {
     dispatch({
       type: USER_ADD_REQUEST
     })
-    const { data } = await registerUserApi(fname, lname, email, phoneNumber, password)
+    const { data } = await registerUserApi(fname, lname, email, phoneNumber, password, id)
     dispatch({
       type: USER_ADD_SUCCESS,
       payload: data
@@ -52,6 +53,7 @@ export const registerUser = (fname, lname, email, phoneNumber, password) => asyn
 }
 
 export const userLogin = (email, password) => async (dispatch) => {
+  const navigate = useNavigate();
   try {
     dispatch({
       type: USER_LOGIN_REQUEST
@@ -66,6 +68,8 @@ export const userLogin = (email, password) => async (dispatch) => {
       text: 'You have successfully logged in',
       icon: 'success',
       confirmButtonText: 'Ok'
+    }).then(() => {
+      navigate('/dashboard')
     })
     document.cookie = `user=${JSON.stringify(data)}; path=/`
   } catch (error) {
