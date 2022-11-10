@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
+import { useNavigate } from 'react-router-dom';
 
 // getting id from cookies
 const user = document.cookie.split('=')[1];
@@ -60,7 +61,7 @@ function imageUploaded(files) {
             fileName: fileName,
             fileType: fileType
           }
-          axios.post(`https://rsquare-auth.herokuapp.com/images/${userObj.id}`, data)
+         axios.post(`https://rsquare-auth.herokuapp.com/images/${userObj.id}`, data)
             .then(res => {
               console.log(res);
             })
@@ -70,9 +71,7 @@ function imageUploaded(files) {
 
         };
         base64String = "";
-        console.log("done");
-        // refresh page
-        window.location.reload();
+        console.log("done")
         reader.onerror = (error) => {
           console.log('Error: ', error);
         }
@@ -85,6 +84,7 @@ function imageUploaded(files) {
 export function Previews(props) {
   const [acceptImage, setAcceptImage] = useState([]);
   const [files, setFiles] = useState([]);
+  const navigate = useNavigate()
   const {getRootProps, getInputProps} = useDropzone({
     accept: {
       'image/*': []
@@ -160,6 +160,7 @@ export function Previews(props) {
         <button className=' bg-Bluish text-white py-2 px-6 rounded-md border-2 border-Bluish ml-5'
           onClick={() => {
             imageUploaded(acceptImage)
+            navigate("/")
           }}
         >
           <span className='flex flex-row'>
