@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import SignUp from './Pages/SignUp/SignUp';
 import SignIn from './Pages/SignIn/SignIn';
 import Dashboard from './Pages/Dashboard/Dashboard';
+import ErrPage from './Pages/404/ErrPage';
 
 export default function Navigator() {
     const token = document.cookie.split('=')[1];
@@ -21,6 +22,7 @@ export default function Navigator() {
                 />
                 <Route path="/login" element={<SignIn/>} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="*" element={<ErrPage/>} />
             </Routes>
         </BrowserRouter>
     );

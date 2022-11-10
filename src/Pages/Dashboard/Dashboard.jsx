@@ -31,7 +31,7 @@ const Dashboard = () => {
           Media Library
         </div>
         <div >
-          <button className='bg-Bluish hover:bg-Bluish text-white py-2 px-4 rounded-lg' onClick={
+          <button className='bg-Bluish hover:bg-Bluish text-white py-2 px-4 rounded-lg mr-2' onClick={
             () => setShow(!show)
           }>
             <span className='flex flex-row'>
@@ -40,10 +40,10 @@ const Dashboard = () => {
             </span>
           </button>
           {showdelete&&
-          <button className='bg-Bluish hover:bg-Bluish text-white py-2 px-4 rounded-lg' 
+          <button className='bg-white border-2 text-Bluish border-Bluish hover:bg-Bluish hover:text-white py-2 px-4 rounded-lg' 
       >
             <span className='flex flex-row'>
-              <AiFillDelete className='w-6 h-7 mr-2' />
+              <AiFillDelete className='w-6 h-7 mr-2 ' />
               Delete Selected
             </span>
           </button>
