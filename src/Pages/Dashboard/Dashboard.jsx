@@ -6,6 +6,7 @@ import axios from 'axios'
 
 const Dashboard = () => {
   const [show, setShow] = useState(false)
+  const [showdelete, setShowDelete] = useState(false)
 
   // getting id from cookies
   const user = document.cookie.split('=')[1]
@@ -79,19 +80,23 @@ const Dashboard = () => {
             </>
           ) : null}
           {image.map((img, index) => (
-          <div className='px-2 py-2 bg-white rounded-lg shadow-md'>
-            <img src={img.image} alt='img' key={index} />
+            <div className='px-2 py-2 bg-white rounded-lg shadow-xl border border-grey400'>
+              <div className=' float-left'>
+                <input type='checkbox' className='  mt-1 mr-2 w-5 h-5'
+                  // get value of checkbox
+                  onChange={(e) => {
+                    console.log(e.target.checked);
+                    console.log(img._id);
+                    setShowDelete(e.target.checked)
+                  }}
+
+                />
+              </div>
+              <img src={img.image} alt='img' key={index} className='2xl:h-48 2xl:w-52 rounded-lg' />
             {/* file name and type  */}
             <hr className='text-grey500 mb-2' />
             {/* checkbox to delete image in top left and image*/}
-            <div className=' flex flex-row justify-between mt-2'>
-              <div className='absolute flex flex-row'>
-                <input type='checkbox' className='  mt-1 mr-2' style={{
-                  position: 'relative',
-                  top: '0.5rem',
-                  left: "-20%",
-                }} />
-                </div>
+              <div className=' flex flex-row justify-between mt-2'>
               <div className='text-sm font-semibold text-gray-500'>
                 {img.fileName}
                 </div>
@@ -111,10 +116,7 @@ const Dashboard = () => {
         // backgroundSize: 'cover',
         backgroundPosition: 'center',
               height: '80vh'
-      }}>
-
-              )
-
+            }}>
         {show ? (
           <>
             <div
