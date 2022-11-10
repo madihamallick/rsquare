@@ -62,7 +62,7 @@ const SignUp = () => {
                                 <label class="tracking-wide text-grey600 text-xs font-bold mb-2 flex flex-row" >
                                     Email Address  <p class="text-red text-xs italic">*</p>
                                 </label>
-                                <input value={email} class="appearance-none block w-full  text-grey500 border border-grey550  rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Jane@gmail.com"
+                                <input value={email} class="appearance-none block w-full  text-grey600 border border-grey550  rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Jane@gmail.com"
                                     onChange={(e) => setEmail(e.target.value)} />
                             </div>
                             <div class="w-full md:w-1/2 px-3">
