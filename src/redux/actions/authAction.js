@@ -39,7 +39,15 @@ export const registerUser =
           title: "Verify your email",
           text: "Please verify your email to continue",
           icon: "info",
-          confirmButtonText: "Ok",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Login",
+          cancelButtonText: "Cancel",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/login";
+          }
         });
       });
     } catch (error) {
@@ -74,10 +82,17 @@ export const userLogin = (email, password) => async (dispatch) => {
       title: "Success",
       text: "You have successfully logged in",
       icon: "success",
-      confirmButtonText: "Ok",
-    }).then(() => {
-      // navigate('/dashboard')
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Dashboard",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/dashboard";
+      }
     });
+
     document.cookie = `user=${JSON.stringify(data)}; path=/`;
   } catch (error) {
     dispatch({
