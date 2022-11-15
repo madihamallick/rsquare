@@ -1,12 +1,13 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
-import {useDropzone} from 'react-dropzone';
+import React, { useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { useNavigate } from 'react-router-dom';
 
 // getting id from cookies
 const user = document.cookie.split('=')[1];
 const userObj = user && JSON.parse(user);
 console.log(userObj?.id);
+
 
 
 const thumbsContainer = {
@@ -43,61 +44,68 @@ const img = {
 
 let base64String = "";
 
-function imageUploaded(files) {
-    for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-        reader.readAsDataURL(files[i]);
-        // getting file name and type
-        const fileName = files[i].name;
-        const fileType = files[i].type;
+function imageUploaded(files, setLoading, navigate) {
+  for (let i = 0; i < files.length; i++) {
+    setLoading(true);
+    const reader = new FileReader();
+    reader.readAsDataURL(files[i]);
 
-        // eslint-disable-next-line no-loop-func
-        reader.onload = () => {
-            base64String = reader.result;
-            console.log(base64String);
-          const data = {
-            image: base64String,
-            userId: userObj.id,
-            fileName: fileName,
-            fileType: fileType
-          }
-         axios.post(`https://rsquare-auth.herokuapp.com/images/${userObj.id}`, data)
-            .then(res => {
-              console.log(res);
-            })
-            .catch(err => {
-              console.log(err);
-            })
+    // getting file name and type
+    const fileName = files[i].name;
+    const fileType = files[i].type;
 
-        };
-        base64String = "";
-        console.log("done")
-        reader.onerror = (error) => {
-          console.log('Error: ', error);
-        }
+    // eslint-disable-next-line no-loop-func
+    reader.onload = () => {
+      base64String = reader.result;
+      console.log(base64String);
+      const data = {
+        image: base64String,
+        userId: userObj.id,
+        fileName: fileName,
+        fileType: fileType
+      }
+      axios.post(`https://rsquare-auth.herokuapp.com/images/${userObj.id}`, data)
+        .then(res => {
+          console.log(res);
+          setLoading(false);
+          navigate("/")
+          window.location.reload()
+        })
+        .catch(err => {
+          console.log(err);
+          setLoading(false);
+        })
+
+    };
+    base64String = "";
+    console.log("done")
+    reader.onerror = (error) => {
+      console.log('Error: ', error);
     }
+  }
 }
 
 
-  
+
 
 export function Previews(props) {
   const [acceptImage, setAcceptImage] = useState([]);
   const [files, setFiles] = useState([]);
   const navigate = useNavigate()
-  const {getRootProps, getInputProps} = useDropzone({
+  const [loading, setLoading] = useState(false);
+  const { getRootProps, getInputProps } = useDropzone({
     accept: {
       'image/*': []
     },
     onDrop: acceptedFiles => {
       setFiles(acceptedFiles.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
-        })));
+      })));
       setAcceptImage(acceptedFiles);
-    // imageUploaded(acceptedFiles);
+      // imageUploaded(acceptedFiles);
     }
   });
-  
+
   const thumbs = files.map(file => (
     <div style={thumb} key={file.name}>
       <div style={thumbInner}>
@@ -118,35 +126,40 @@ export function Previews(props) {
   }, [files]);
 
   return (
-<>
-    <section 
-    className="container mb-5 mx-auto  cursor-pointer border-dotted border-2 py-8 flex justify-center flex-col items-center"
+    <>
+      <section
+        className="container mb-5 mx-auto  cursor-pointer border-dotted border-2 py-8 flex justify-center flex-col items-center"
         style={{
-            transition: 'all 0.5s ease-in-out',
+          transition: 'all 0.5s ease-in-out',
         }}
-    >
+      >
         {files.length > 0 ? null : (
-      <div {...getRootProps({className: 'dropzone'})}>
-        <input {...getInputProps()} />
-        <p className='text-center'>Drag Files Here</p>
-        <br/>
-        <p className='text-center'>Or</p>
+          <div {...getRootProps({ className: 'dropzone' })}>
+            <input {...getInputProps()} />
+            <p className='text-center'>Drag Files Here</p>
             <br />
-        <button className=' hover:bg-Bluish hover:text-white  text-Bluish py-2 px-6 rounded-md border-2 border-Bluish'>
-            <span className='flex flex-row'>
-           Browse
-            </span>
+            <p className='text-center'>Or</p>
+            <br />
+            <button className=' hover:bg-Bluish hover:text-white  text-Bluish py-2 px-6 rounded-md border-2 border-Bluish'>
+              <span className='flex flex-row'>
+                Browse
+              </span>
             </button>
-      </div>
+          </div>
         )}
-      <aside style={thumbsContainer}>
-        {thumbs}
-        {console.log(files)}
-      </aside>
-    </section>
-      {/* <div class="w-full bg-grey400 shadow-sm rounded-full h-2.5 mb-4 dark:bg-grey700">
-        <div class="bg-Bluish h-2.5 rounded-full dark:bg-Bluish" style={{ width: "45%" }}></div>
-      </div> */}
+        <aside style={thumbsContainer}>
+          {thumbs}
+          {console.log(files)}
+        </aside>
+      </section>
+      {/* loader */}
+      {loading && (
+        <div
+          className=" h-1.5 animate-pulse bg-Bluish delay-150 z-10 mb-4 rounded-xl"
+
+        ></div>
+      )}
+
       {/* Add more and upload button to the right */}
       <div className='flex flex-row justify-end '>
         <div {...getRootProps({ className: 'dropzone' })}>
@@ -159,8 +172,8 @@ export function Previews(props) {
         </div>
         <button className=' bg-Bluish text-white py-2 px-6 rounded-md border-2 border-Bluish ml-5'
           onClick={() => {
-            imageUploaded(acceptImage)
-            navigate("/")
+            imageUploaded(acceptImage, setLoading, navigate);
+            // navigate("/")
           }}
         >
           <span className='flex flex-row'>

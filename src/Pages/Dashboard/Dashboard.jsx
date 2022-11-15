@@ -114,7 +114,7 @@ const Dashboard = () => {
           {image.map((img, index) => (
             <div className='px-2 py-2 bg-white rounded-lg shadow-xl border border-grey400'>
               <div className=' float-left'>
-                <input type='checkbox' className='  mt-1 mr-2 w-5 h-5'
+                <input type='checkbox' className='cursor-pointer mt-1 mr-2 w-5 h-5'
                   // get value of checkbox
                   onChange={(e) => {
                     console.log(e.target.checked);
