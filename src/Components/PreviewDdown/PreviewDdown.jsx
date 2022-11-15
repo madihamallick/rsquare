@@ -44,7 +44,7 @@ const img = {
 
 let base64String = "";
 
-function imageUploaded(files, setLoading, navigate) {
+function imageUploaded(files, setLoading, navigate, setFileUpload, setLoadingPercentage) {
   for (let i = 0; i < files.length; i++) {
     setLoading(true);
     const reader = new FileReader();
@@ -57,7 +57,7 @@ function imageUploaded(files, setLoading, navigate) {
     // eslint-disable-next-line no-loop-func
     reader.onload = () => {
       base64String = reader.result;
-      console.log(base64String);
+      // console.log(base64String);
       const data = {
         image: base64String,
         userId: userObj.id,
@@ -79,6 +79,15 @@ function imageUploaded(files, setLoading, navigate) {
     };
     base64String = "";
     console.log("done")
+
+    setFileUpload(i + 1);
+
+    // calculating percentage in basis of total files
+    const percentage = Math.round((i + 1) / files.length * 100);
+    console.log(percentage);
+    setLoadingPercentage(percentage);
+
+
     reader.onerror = (error) => {
       console.log('Error: ', error);
     }
@@ -93,6 +102,8 @@ export function Previews(props) {
   const [files, setFiles] = useState([]);
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false);
+  const [loadingPercentage, setLoadingPercentage] = useState(0);
+  const [fileUpload, setFileUpload] = useState(false);
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       'image/*': []
@@ -154,11 +165,28 @@ export function Previews(props) {
       </section>
       {/* loader */}
       {loading && (
-        <div
-          className=" h-1.5 animate-pulse bg-Bluish delay-150 z-10 mb-4 rounded-xl"
+        <>
+          <div class="w-full bg-grey400 shadow-sm rounded-full h-2.5 mb-2 dark:bg-grey700">
+            <div class="bg-Bluish h-2.5 rounded-full dark:bg-Bluish" style={{ width: { loadingPercentage } }}></div>
+          </div>
+          <div className="flex justify-between">
+            <div className="text-center text-sm text-grey700">
+              {fileUpload} /   {files.length}   uploaded
+            </div>
+            {/* time remaining */}
+            <div className="flex flex-col mb-2 items-center">
+              <div className="text-grey700 text-sm text-center">
+                Time Remaining:
 
-        ></div>
+
+                00:00:00
+
+              </div>
+            </div>
+          </div>
+        </>
       )}
+
 
       {/* Add more and upload button to the right */}
       <div className='flex flex-row justify-end '>
@@ -172,7 +200,7 @@ export function Previews(props) {
         </div>
         <button className=' bg-Bluish text-white py-2 px-6 rounded-md border-2 border-Bluish ml-5'
           onClick={() => {
-            imageUploaded(acceptImage, setLoading, navigate);
+            imageUploaded(acceptImage, setLoading, navigate, setFileUpload, setLoadingPercentage);
             // navigate("/")
           }}
         >
